@@ -4,6 +4,8 @@ import ExpensesFilter from "./ExpensesFilter";
 import ExpenseItem from "./ExpenseItem";
 import Card from "../UI/Card";
 import "./Expenses.css";
+import ExpensesList from "./ExpensesList";
+import ExpensesChart from "./ExpensesChart";
 
 const ExpenseTask = (props) => {
   const [filteredYear, setFilteredYear] = useState("2021");
@@ -15,17 +17,6 @@ const ExpenseTask = (props) => {
     (expense) => expense.date.getFullYear().toString() === filteredYear
   );
 
-  let expensesContent = <p>No expenses found.</p>;
-  if (filteredExpenses.length > 0)
-    expensesContent = filteredExpenses.map((expense) => (
-      <ExpenseItem
-        key={expense.id}
-        title={expense.title}
-        amount={expense.amount}
-        date={expense.date}
-      />
-    ));
-
   return (
     <div>
       <Card className="expenses">
@@ -33,7 +24,8 @@ const ExpenseTask = (props) => {
           selected={filteredYear}
           onChangedYear={selectedYearHandler}
         />
-        {expensesContent}
+        <ExpensesChart expenses={filteredExpenses} />
+        <ExpensesList items={filteredExpenses} />
       </Card>
     </div>
   );
